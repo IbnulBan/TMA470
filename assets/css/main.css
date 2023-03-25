@@ -83,6 +83,46 @@ img{
   cursor: pointer;
 }
 
+/* Main design part to update the page in various location */
+
+.wrapper{
+  display: flex;
+  height: 90vh;
+  padding: 50px 0;
+}
+.left-wrapper, .right-wrapper{
+  width: 50%;
+}
+.left-wrapper {
+  border: 1px solid #000;
+}
+.right-wrapper {
+  background-color: #ddd;
+}
+.left-header-content{
+  display: flex;
+  border-bottom: 1px solid #000;
+}
+.portal-heading-content{
+  padding-left: 15px;
+}
+.left-wrapper-content {
+  text-align: center;
+  padding-top: 100px;
+}
+.portal-image, .portal-heading-content {
+  width: 50%;
+}
+.business-list-heading{
+  padding-top: 30px;
+  text-align: center;
+}
+
+
+
+
+
+
 
 
 
@@ -105,25 +145,4 @@ img{
   .container {
     width: 1170px;
   }
-}
-
-
-
-
-/* Main design part to update the page in various location */
-
-.wrapper{
-    display: flex;
-}
-.left-wrapper, .right-wrapper{
-    width: 50%;
-}
-.right-wrapper {
-    background-color: #ddd;
-}
-.left-header-content{
-    display: flex;
-}
-.portal-image, .portal-heading-content {
-    width: 50%;
 }
