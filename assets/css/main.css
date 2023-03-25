@@ -1,0 +1,129 @@
+/* google font import */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
+/* reset css */
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #212529;
+}
+
+a {
+  text-decoration: none;
+}
+
+img{
+    width: 100%;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.content-area {
+  margin: 120px auto;
+}
+
+.btn {
+  background-color: #0e1c36;
+  color: #fff;
+
+}
+
+.btn:hover {
+  background-color: #0e1c36de;
+}
+
+.form-container {
+  width: 350px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.login-form {
+  background-color: #ebf2fa;
+  padding: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+}
+.field {
+  text-align: center;
+  padding-bottom: 15px;
+}
+.field input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.submit-btn {
+  text-align: center;
+}
+.btn {
+  font-size: 1rem;
+  color: #fff;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #0e1c36;
+  cursor: pointer;
+}
+
+
+
+
+
+
+/* media query */
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+
+
+
+/* Main design part to update the page in various location */
+
+.wrapper{
+    display: flex;
+}
+.left-wrapper, .right-wrapper{
+    width: 50%;
+}
+.right-wrapper {
+    background-color: #ddd;
+}
+.left-header-content{
+    display: flex;
+}
+.portal-image, .portal-heading-content {
+    width: 50%;
+}
