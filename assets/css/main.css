@@ -37,58 +37,60 @@ img{
   margin: 120px auto;
 }
 
-.btn {
-  background-color: #0e1c36;
-  color: #fff;
-
-}
-
-.btn:hover {
-  background-color: #0e1c36de;
-}
-
-.form-container {
-  width: 350px;
-  height: auto;
-  margin: 0 auto;
-}
-
-.login-form {
-  background-color: #ebf2fa;
-  padding: 20px;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-}
-.field {
-  text-align: center;
-  padding-bottom: 15px;
-}
-.field input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-.submit-btn {
-  text-align: center;
-}
-.btn {
+/* .btn {
   font-size: 1rem;
   color: #fff;
-  width: 100%;
   padding: 10px 20px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  background-color: #0e1c36;
+  background-color: transparent;
+  background-image: linear-gradient(
+    rgba(#7b7a7a, 0.0675) 0%,
+    rgba(#434242, 0.25) 50%,
+    rgba(#0c0c0c, 0.25) 100%
+  );
   cursor: pointer;
+  transition: background-position 0.25s ease;
+}
+.btn:hover,
+.btn:focus {
+  background-position: 0 calc(100% + 1px);
+  outline: none;
+} */
+
+         
+.btn {
+  background-image: linear-gradient(to right, #1F1C2C 0%, #928DAB  51%, #1F1C2C  100%);
+  margin: 10px;
+  padding: 15px 45px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: white;            
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  display: block;
 }
 
+.btn:hover {
+  background-position: right center; /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
+button.btn.btn-primary {
+  margin: 0 auto;
+}
+a.btn.btn-email {
+  width: 30%;
+  margin: 0 auto;
+}
 /* Main design part to update the page in various location */
 
 .wrapper{
   display: flex;
   height: 90vh;
-  padding: 50px 0;
+  padding: 50px 0 20px;
 }
 .left-wrapper, .right-wrapper{
   width: 50%;
@@ -107,8 +109,7 @@ img{
   padding-left: 15px;
 }
 .left-wrapper-content {
-  text-align: center;
-  padding-top: 100px;
+  padding: 50px 20px 0;
 }
 .portal-image, .portal-heading-content {
   width: 50%;
@@ -117,7 +118,25 @@ img{
   padding-top: 30px;
   text-align: center;
 }
-
+.main-content{
+  font-size: 18px;
+  font-weight: 600;
+}
+.main-content2{
+  padding: 30px 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+.reg-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.userBusiness_image img {
+  width: 400px;
+  height: 350px;
+  object-fit: cover;
+}
 
 
 
