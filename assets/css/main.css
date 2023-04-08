@@ -23,41 +23,8 @@ a {
 }
 
 img{
-    width: 100%;
+  width: 100%;
 }
-
-.container {
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
-.content-area {
-  margin: 120px auto;
-}
-
-/* .btn {
-  font-size: 1rem;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  background-color: transparent;
-  background-image: linear-gradient(
-    rgba(#7b7a7a, 0.0675) 0%,
-    rgba(#434242, 0.25) 50%,
-    rgba(#0c0c0c, 0.25) 100%
-  );
-  cursor: pointer;
-  transition: background-position 0.25s ease;
-}
-.btn:hover,
-.btn:focus {
-  background-position: 0 calc(100% + 1px);
-  outline: none;
-} */
-
          
 .btn {
   background-image: linear-gradient(to right, #1F1C2C 0%, #928DAB  51%, #1F1C2C  100%);
@@ -70,7 +37,6 @@ img{
   color: white;            
   box-shadow: 0 0 20px #eee;
   border-radius: 10px;
-  display: block;
 }
 
 .btn:hover {
@@ -78,63 +44,35 @@ img{
   color: #fff;
   text-decoration: none;
 }
-button.btn.btn-primary {
+
+button.btn.btn-primary, .btn.reg_btn, .btn.btn-email {
   margin: 0 auto;
 }
-a.btn.btn-email {
+.btn.reg_btn {
+  width: 50%;
+}
+.btn.btn-email {
   width: 30%;
-  margin: 0 auto;
 }
 /* Main design part to update the page in various location */
 
-.wrapper{
-  display: flex;
-  height: 90vh;
-  padding: 50px 0 20px;
-}
-.left-wrapper, .right-wrapper{
-  width: 50%;
-}
-.left-wrapper {
-  border: 1px solid #000;
-}
-.right-wrapper {
-  background-color: #ddd;
-}
-.left-header-content{
-  display: flex;
-  border-bottom: 1px solid #000;
-}
-.portal-heading-content{
-  padding-left: 15px;
-}
-.left-wrapper-content {
-  padding: 50px 20px 0;
-}
-.portal-image, .portal-heading-content {
-  width: 50%;
-}
-.business-list-heading{
-  padding-top: 30px;
-  text-align: center;
+.right-bg {
+  background-color: #a1a1a1;
 }
 .main-content{
   font-size: 18px;
   font-weight: 600;
 }
 .main-content2{
-  padding: 30px 0;
   font-size: 14px;
   font-weight: 600;
 }
-.reg-btn {
-  display: block;
-  width: 100%;
-  text-align: center;
+.home-icon{
+  color: #000;
 }
 .userBusiness_image img {
-  width: 400px;
-  height: 350px;
+  width: 300px;
+  height: 250px;
   object-fit: cover;
 }
 

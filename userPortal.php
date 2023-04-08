@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +11,13 @@
 
     <title>User Portal</title>
 
+    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-    
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-6">
@@ -31,14 +37,14 @@
             <div class="offset-md-2 col-md-8 pt-5">
                 <div class="businessDetailsoffer">
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, dolore ipsa! Expedita accusamus voluptas omnis pariatur odio quis nemo illo repellat sint necessitatibus ea facilis commodi sunt, facere consequuntur minima quod odit ab officiis sequi hic maiores reprehenderit illum! Assumenda, asperiores praesentium dolore veniam mollitia voluptatem corporis possimus enim sequi!</p>
-                    <a href="#" class="btn btn-info btn-email">Email Us</a>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col mt-4">
-                <a href="index.html" class="btn btn-primary btn-email">Barking Portal Home</a>
+            <div class="col text-center mt-4 mb-5">
+                <a href="mailto:info@barkingportal.uk" class="btn"><i class="bi bi-envelope-at-fill"></i> Email Us</a>
+                <a href="index.php" class="btn"><i class="bi bi-house-fill"></i> Barking Portal Home</a>
             </div>
         </div>
     </div>
