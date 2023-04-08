@@ -9,6 +9,8 @@
   $password         = $_POST['password'];
   $confirm_password = $_POST['con_password'];
 
+  $admin_pass_hash = md5( $password );
+
   $empmsg_full_name        = "";
   $empmsg_admin_email      = "";
   $empmsg_admin_pass       = "";
@@ -30,9 +32,20 @@
    $empmsg_confirm_password = "Admin confirm password";
   }
 
-  // if ( !empty( $email ) && !empty( $password ) ) {
-  //  echo "ok";
-  // }
+  if ( !empty( $full_name ) && !empty( $email ) && !empty( $password && !empty( $confirm_password ) ) ) {
+   if ( $password === $confirm_password ) {
+
+    $sql = "INSERT INTO admin (full_name,email,password) VALUES('$full_name', '$email', '$admin_pass_hash')";
+
+    if ( $conn->query( $sql ) == TRUE ) {
+     header("Location:index.php?admincreate");
+    } else {
+     echo "failed";
+    }
+   } else {
+    echo "Password not match.";
+   }
+  }
 
  }
 ?>
@@ -56,21 +69,21 @@
     <div class="content-area">
       <h2 class="title-text">Admin Registration</h2>
       <div class="form-container">
-        <form class="login-form" action="<?php echo htmlspecialchars( $_SERVER["PHP_SELF"] ); ?></form>" method="post">
+        <form class="login-form" action="<?php echo htmlspecialchars( $_SERVER["PHP_SELF"] ); ?>" method="post">
           <div class="field">
-            <input type="name" class="form-input" id="username" name="full_name" placeholder="Admin Name">
+            <input type="name" class="form-input" id="username" name="full_name" placeholder="Admin Name" value="<?php if ( isset( $_POST['registration'] ) ) {echo $full_name;} ?>">
             <span class="text-danger"><?php if ( isset( $_POST['registration'] ) ) {echo $empmsg_full_name;} ?></span>
           </div>
           <div class="field">
-            <input type="email" class="form-input" id="useremail" name="email" placeholder="Admin Email">
+            <input type="email" class="form-input" id="useremail" name="email" placeholder="Admin Email" value="<?php if ( isset( $_POST['registration'] ) ) {echo $email;} ?>">
             <span class="text-danger"><?php if ( isset( $_POST['registration'] ) ) {echo $empmsg_admin_email;} ?></span>
           </div>
           <div class="field">
-            <input type="password" class="form-input" id="password" placeholder="Password">
+            <input type="password" class="form-input" id="password" name="password" placeholder="Password">
             <span class="text-danger"><?php if ( isset( $_POST['registration'] ) ) {echo $empmsg_admin_pass;} ?></span>
           </div>
           <div class="field">
-            <input type="conpassword" class="form-input" id="conpassword" name="con_password" placeholder="Confirm password">
+            <input type="password" class="form-input" id="conpassword" name="con_password" placeholder="Confirm password">
             <span class="text-danger"><?php if ( isset( $_POST['registration'] ) ) {echo $empmsg_confirm_password;} ?></span>
           </div>
           <div class="submit-btn">
