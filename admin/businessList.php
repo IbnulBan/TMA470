@@ -7,11 +7,10 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
 
-        <title>Portal Admin Dashboard</title>
+        <title>Business Owner Lists</title>
 
         <link rel="shortcut icon" href="../assets/images/favicon/favicon.ico" type="image/x-icon">
 
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="assets/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -56,7 +55,9 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Add Sector
                             </a>
+                            
                             <div class="sb-sidenav-menu-heading">All Business</div>
+                            
                             <a class="nav-link" href="businessList.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                 Business Lists
@@ -72,57 +73,87 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Dashboard</h1>
+                        <h1 class="mt-4">Business Lists</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Business Lists</li>
                         </ol>
                         <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                Business Owner Lists
+                            <div class="card-header d-flex align-items-center justify-content-between">
+                                <div class="table-title">
+                                    <i class="fas fa-table me-1"></i>
+                                    Business Owner Lists
+                                </div>
+                                <!-- <div class="add-btn">-->
+                                    <!-- Button trigger modal -->
+                                    <!-- <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Add Sector
+                                    </button> -->
+
+                                    <!-- Modal -->
+                                    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Add New Sector</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="<?php //echo htmlspecialchars( $_SERVER["PHP_SELF"] ); ?>" method="get" id="add_form" class="add-form">
+                                                        <div class="mb-3">
+                                                            <input type="text" class="form-control" name="add_sector" id="add_sector" name="add_sector" placeholder="Type New Sector">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-success">Save</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
                             </div>
                             <div class="card-body">
                                 <table class="table table-striped table-hover table-bordered">
                                     <thead>
                                         <tr>
+                                            <th>SL.</th>
                                             <th>Business Name</th>
-                                            <th>Owner Name</th>
-                                            <th>Phone</th>
                                             <th>Business Email</th>
-                                            <th>Business Details</th>
                                             <th>Business Sector</th>
-                                            <th>Business URL</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th>SL.</th>
                                             <th>Business Name</th>
-                                            <th>Owner Name</th>
-                                            <th>Phone</th>
                                             <th>Business Email</th>
-                                            <th>Business Details</th>
                                             <th>Business Sector</th>
-                                            <th>Business URL</th>
+                                            <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td><a href="#">$320,800</a></td>
+                                            <td>1</td>
+                                            <td>Garrett Winters</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td>
+                                                <a href="edit.php" class="btn btn-success">Edit</a>
+                                                <a href="edit.php" class="btn btn-danger">Delete</a>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                            <td><a href="#">$320,800</a></td>
+                                            <td>2</td>
+                                            <td>Garrett Winters</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td>
+                                                <a href="edit.php" class="btn btn-success">Edit</a>
+                                                <a href="edit.php" class="btn btn-danger">Delete</a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -133,7 +164,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Barking Portal UK 2023</div>
+                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
@@ -146,10 +177,5 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="assets/js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="assets/js/chart-area-demo.js"></script>
-        <script src="assets/js/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="assets/js/datatables-simple-demo.js"></script>
     </body>
 </html>
