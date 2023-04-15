@@ -1,6 +1,6 @@
 <?php
 
-require_once "db_connect.php";
+ require_once "db_connect.php";
 
 ?>
 
@@ -37,7 +37,7 @@ require_once "db_connect.php";
 
                     <div class="left-wrapper-content pt-4">
                         <p class="main-content">We like to help local businesses move into wider Internet arena. Where you can reach a larger audience and find new customer. Our goal is to provide you a simple solution to publish your business webpage for free. You see the sectors link on th eright side and your business can be visible there as well.</p>
-
+                        <img src="assets/images/underconstructions.jpg" class="img-fluid" alt="">
                         <p class="main-content2">You need to register your details and fill up few fields and publish your web page in less than 5 minutes.</p>
                         <div class="registrationBtn text-center pb-3">
                             <a href="userReg.php" class="btn reg_btn">Click To Registar</a>
@@ -54,19 +54,19 @@ require_once "db_connect.php";
 
                         <div class="bus_types_btn d-flex flex-wrap">
                         <?php
-                            $sql = "SELECT * FROM business_category ORDER BY name ASC";
+                         $sql = "SELECT * FROM business_category ORDER BY name ASC";
 
-                            $result = $conn->query( $sql );
+                         $result = $conn->query( $sql );
 
-                            if ( $result ) {
-                                while ( $data = mysqli_fetch_assoc( $result ) ) {
-                                ?>
+                         if ( $result ) {
+                          while ( $data = mysqli_fetch_assoc( $result ) ) {
+                          ?>
                                 <a href="businessLists.php" class="btn"><?php echo $data['name']; ?></a>
                                 <?php
-                                }
-                            }
-                        ?>
-                        </div>                        
+                                 }
+                                 }
+                                ?>
+                        </div>
                     </div>
                 </div>
             </div>
