@@ -1,25 +1,17 @@
-function validate()
-{
- var email=$("#email").val();
- var pass=$("#password").val();
- 
- var email_regex=/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
- var password_regex1=/([a-z].*[A-Z])|([A-Z].*[a-z])([0-9])+([!,%,&,@,#,$,^,*,?,_,~])/;
- var password_regex2=/([0-9])/;
- var password_regex3=/([!,%,&,@,#,$,^,*,?,_,~])/;
+window.addEventListener('DOMContentLoaded', event => {
 
- if(email_regex.test(email)==false)
- {
-  alert("Please Enter Correct Email");
-  return false;	
- }
- else if(pass.length<8 || password_regex1.test(pass)==false || password_regex2.test(pass)==false || password_regex3.test(pass)==false)
- {
-  alert("Please Enter Strong Password");
-  return false;
- }
- else
- {
-  return true;
- }
-}
+    // Toggle the side navigation
+    const sidebarToggle = document.body.querySelector('#sidebarToggle');
+    if (sidebarToggle) {
+        // Uncomment Below to persist sidebar toggle between refreshes
+        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+        //     document.body.classList.toggle('sb-sidenav-toggled');
+        // }
+        sidebarToggle.addEventListener('click', event => {
+            event.preventDefault();
+            document.body.classList.toggle('sb-sidenav-toggled');
+            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+        });
+    }
+
+});

@@ -1,3 +1,9 @@
+<?php
+
+require_once "db_connect.php";
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,16 +52,20 @@
                             <h2>Barking Business Lists</h2>
                         </div>
 
-                        <div class="bus_types_btn d-flex justify-content-between flex-wrap">
-                            <a href="businessLists.php" class="btn">Barber</a>
-                            <a href="businessLists.php" class="btn">Construction</a>
-                            <a href="businessLists.php" class="btn">DIY</a>
-                            <a href="businessLists.php" class="btn">Dry cleaning</a>
-                            <a href="businessLists.php" class="btn">Finance</a>
-                            <a href="businessLists.php" class="btn">Food</a>
-                            <a href="businessLists.php" class="btn">Production</a>
-                            <a href="businessLists.php" class="btn">Retail</a>
-                            <a href="businessLists.php" class="btn">Trade</a>
+                        <div class="bus_types_btn d-flex flex-wrap">
+                        <?php
+                            $sql = "SELECT * FROM business_category ORDER BY name ASC";
+
+                            $result = $conn->query( $sql );
+
+                            if ( $result ) {
+                                while ( $data = mysqli_fetch_assoc( $result ) ) {
+                                ?>
+                                <a href="businessLists.php" class="btn"><?php echo $data['name']; ?></a>
+                                <?php
+                                }
+                            }
+                        ?>
                         </div>                        
                     </div>
                 </div>

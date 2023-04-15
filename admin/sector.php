@@ -1,29 +1,31 @@
 <?php
 
- require "../db_connect.php";
+    require "../db_connect.php";
 
- if ( isset( $_GET['save'] ) ) {
+    if ( isset( $_POST['save'] ) ) {
 
-  $new_sector = $_POST['name'];
+        $new_sector = $_POST['name'];
 
-  $empmsg_add_sector = "";
+        $empmsg_add_sector = "";
 
-  if ( empty( $new_sector ) ) {
-   $empmsg_add_sector = "Please Add new sector";
-  }
+        if ( empty( $new_sector ) ) {
+            $empmsg_add_sector = "Please Add new sector";
+        }
 
-  if ( !empty( $new_sector ) ) {
+        if ( !empty( $new_sector ) ) {
 
-   $sql = "INSERT INTO business_category('name') VALUES ('$new_sector')";
+            $sql = "INSERT INTO business_category (name) VALUES ('$new_sector')";
 
-   if ( $conn->query( $sql ) == TRUE ) {
-    echo "Success";
-   }
-  }
- }
+            if ( $conn->query( $sql ) ) {
+                header( 'Location:sector.php' );
+            }
+        }
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+<head>
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -37,8 +39,8 @@
 
         <link href="assets/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    </head>
-    <body class="sb-nav-fixed">
+</head>
+<body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="dashboard.php">Admin Portal</a>
@@ -74,7 +76,7 @@
                                 Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Business Sector</div>
-                            <a class="nav-link" href="sector.php">
+                            <a class="nav-link text-white" href="sector.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Add Sector
                             </a>
@@ -99,46 +101,22 @@
                             <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
                             <li class="breadcrumb-item active">Business Sector</li>
                         </ol>
-                        <div class="text-center">
-                            <?php
-                             if ( isset( $_GET['admincreate'] ) ) {
-                              echo "Admin created Successfully.";
-                             }
-                            ?>
-                        </div>
                         <div class="card mb-4">
                             <div class="card-header d-flex align-items-center justify-content-between">
                                 <div class="table-title">
                                     <i class="fas fa-table me-1"></i>
-                                    Business Sectors
+                                    All Business Sectors
                                 </div>
                                 <div class="add-btn">
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addSector">
-                                    Add Sector
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="addSector" tabindex="-1" aria-labelledby="addSectorLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="addSectorLabel">Add New Sector</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="" method="get" id="add_form" class="add-form">
-                                                    <div class="mb-3">
-                                                        <input type="text" class="form-control" id="add_sector" name="name" placeholder="Type New Sector">
-                                                        <span class="text-danger"><?php if ( isset( $_GET['save'] ) ) {echo $empmsg_add_sector;} ?></span>
-                                                    </div>
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" name="save" class="btn btn-success">Save</button>
-                                                </form>
-                                            </div>
+                                    <form action="<?php echo htmlspecialchars( $_SERVER['PHP_SELF'] ); ?>" method="post" id="add_form" class="row">
+                                        <div class="col-auto">
+                                            <input type="text" class="form-control" id="add_sector" name="name" placeholder="Type New Sector">
+                                            <span class="text-danger"><?php if ( isset( $_POST['save'] ) ) {echo $empmsg_add_sector;} ?></span>
                                         </div>
-                                    </div>
-                                    </div>
+                                        <div class="col-auto">
+                                            <button type="submit" name="save" class="btn btn-success mb-3">Add Sector</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -158,22 +136,28 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Architect</td>
-                                            <td>
-                                                <a href="edit.php" class="btn btn-success">Edit</a>
-                                                <a href="edit.php" class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Architect</td>
-                                            <td>
-                                                <a href="edit.php" class="btn btn-success">Edit</a>
-                                                <a href="edit.php" class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
+                                    <?php
+                                        $n   = 1;
+                                        $sql = "SELECT * FROM business_category ORDER BY name ASC";
+
+                                        $result = $conn->query( $sql );
+
+                                        if ( $result ) {
+                                            while ( $data = mysqli_fetch_assoc( $result ) ) {
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $n; ?></td>
+                                                <td><?php echo $data['name']; ?></td>
+                                                <td>
+                                                    <a href="edit.php" class="btn btn-success">Edit</a>
+                                                    <a href="edit.php" class="btn btn-danger">Delete</a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                                $n++;
+                                            }
+                                        }
+                                    ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -194,7 +178,9 @@
                 </footer>
             </div>
         </div>
+
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="assets/js/scripts.js"></script>
+        <script src="assets/js/main.js"></script>
     </body>
 </html>
