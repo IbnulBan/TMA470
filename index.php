@@ -40,7 +40,7 @@
                         <img src="assets/images/underconstructions.jpg" class="img-fluid" alt="">
                         <p class="main-content2">You need to register your details and fill up few fields and publish your web page in less than 5 minutes.</p>
                         <div class="registrationBtn text-center pb-3">
-                            <a href="userReg.php" class="btn reg_btn">Click To Registar</a>
+                            <a href="userReg.php" class="btn reg_btn">Click To Register</a>
                         </div>
                     </div>
                 </div>

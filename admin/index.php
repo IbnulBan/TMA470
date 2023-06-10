@@ -1,37 +1,12 @@
 <?php
 
+ session_start();
+ if ( isset( $_SESSION['adminUser'] ) ) {
+  header( 'Location:dashboard.php' );
+ }
+
  require "../db_connect.php";
 
- if ( isset( $_POST['login'] ) ) {
-
-  $email    = $_POST['email'];
-  $password = $_POST['password'];
-  $admin_pass_hash = md5( $password );
-
-  $empmsg_admin_email = "";
-  $empmsg_admin_pass  = "";
-
-  if ( empty( $email ) ) {
-   $empmsg_admin_email = "Provide valid Admin email";
-  }
-
-  if ( empty( $password ) ) {
-   $empmsg_admin_pass = "Provide correct password";
-  }
-
-  if ( !empty( $email ) && !empty( $password ) ) {
-   $sql = "SELECT * FROM admin WHERE email = '$email' AND password = '$admin_pass_hash'";
-
-   $query = $conn->query( $sql );
-
-   if ( $query->num_rows > 0 ) {
-    header("Location:dashboard.php");
-   } else {
-    echo "not found";
-   }
-  }
-
- }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +27,48 @@
     <div class="content-area">
       <h2 class="title-text">Admin Login</h2>
       <div class="form-container">
+        <?php
+         if ( isset( $_POST['login'] ) ) {
+
+          $admin_email = $_POST['email'];
+          $admin_pass  = $_POST['password'];
+
+          $admin_pass_hash = md5( $password );
+
+          $sql   = "SELECT * FROM admin WHERE email='$admin_email'";
+          $query = mysqli_query( $conn, $sql );
+
+          $adminUser = mysqli_fetch_array( $query, MYSQLI_ASSOC );
+
+          if($adminUser){
+
+          }
+
+          // $empmsg_admin_email = "";
+          // $empmsg_admin_pass  = "";
+
+          // if ( empty( $email ) ) {
+          //   $empmsg_admin_email = "Provide valid Admin email";
+          // }
+
+          // if ( empty( $password ) ) {
+          //   $empmsg_admin_pass = "Provide correct password";
+          // }
+
+          // if ( !empty( $email ) && !empty( $password ) ) {
+          //   $sql = "SELECT * FROM admin WHERE email = '$email' AND password = '$admin_pass_hash'";
+
+          //   $query = $conn->query( $sql );
+
+          //   if ( $query->num_rows > 0 ) {
+          //     header( "Location:dashboard.php" );
+          //   } else {
+          //     echo "not found";
+          //   }
+          // }
+
+         }
+        ?>
         <form id="login-form" class="login-form" action="<?php echo htmlspecialchars( $_SERVER["PHP_SELF"] ); ?>" method="post">
           <div class="text-center">
             <?php

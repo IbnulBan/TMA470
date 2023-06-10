@@ -1,53 +1,11 @@
 <?php
 
+ session_start();
+ if ( isset( $_SESSION['adminUser'] ) ) {
+  header( 'Location:dashboard.php' );
+ }
  require "../db_connect.php";
 
- if ( isset( $_POST['registration'] ) ) {
-
-  $full_name        = $_POST['full_name'];
-  $email            = $_POST['email'];
-  $password         = $_POST['password'];
-  $confirm_password = $_POST['con_password'];
-
-  $admin_pass_hash = md5( $password );
-
-  $empmsg_full_name        = "";
-  $empmsg_admin_email      = "";
-  $empmsg_admin_pass       = "";
-  $empmsg_confirm_password = "";
-
-  if ( empty( $full_name ) ) {
-   $empmsg_full_name = "Admin Name";
-  }
-
-  if ( empty( $email ) ) {
-   $empmsg_admin_email = "Admin email";
-  }
-
-  if ( empty( $password ) ) {
-   $empmsg_admin_pass = "Admin password";
-  }
-
-  if ( empty( $confirm_password ) ) {
-   $empmsg_confirm_password = "Admin confirm password";
-  }
-
-  if ( !empty( $full_name ) && !empty( $email ) && !empty( $password && !empty( $confirm_password ) ) ) {
-   if ( $password === $confirm_password ) {
-
-    $sql = "INSERT INTO admin (full_name,email,password) VALUES('$full_name', '$email', '$admin_pass_hash')";
-
-    if ( $conn->query( $sql ) == TRUE ) {
-     header("Location:index.php?admincreate");
-    } else {
-     echo "failed";
-    }
-   } else {
-    echo "Password not match.";
-   }
-  }
-
- }
 ?>
 
 <!DOCTYPE html>
@@ -69,22 +27,75 @@
     <div class="content-area">
       <h2 class="title-text">Admin Registration</h2>
       <div class="form-container">
-        <form class="login-form" action="<?php echo htmlspecialchars( $_SERVER["PHP_SELF"] ); ?>" method="post">
+        <?php
+         if ( isset( $_POST['registration'] ) ) {
+
+          $admin_name     = $_POST['name'];
+          $admin_email    = $_POST['email'];
+          $admin_pass     = $_POST['password'];
+          $admin_con_pass = $_POST['con_password'];
+
+          $admin_pass_hash = password_hash( $admin_pass, PASSWORD_DEFAULT );
+
+          $errors = array();
+
+          if ( empty( $admin_name ) OR empty( $admin_email ) OR empty( $admin_pass OR empty( $admin_con_pass ) ) ) {
+           array_push( $errors, "All fields are required." );
+          }
+
+          if ( !filter_var( $admin_email, FILTER_VALIDATE_EMAIL ) ) {
+           array_push( $errors, "Email not valid." );
+          }
+
+          if ( strlen( $admin_pass ) < 5 ) {
+           array_push( $errors, "Password must be at least 5 character long." );
+          }
+
+          if ( $admin_pass !== $admin_con_pass ) {
+           array_push( $errors, "Password does not match." );
+          }
+
+          $sql   = "SELECT * FROM admin WHERE email='$admin_email'";
+          $query = mysqli_query( $conn, $sql );
+
+          $rowCount = mysqli_num_rows( $query );
+
+          if ( $rowCount > 0 ) {
+           array_push( $errors, "Email already exist." );
+          }
+
+          if ( count( $errors ) > 0 ) {
+           foreach ( $errors as $error ) {
+            echo "<div class='alert alert-danger'>$error</div>";
+           }
+          } else {
+           $sql         = "INSERT INTO admin (name, email, password) Values(?,?,?)";
+           $stmt        = mysqli_stmt_init( $conn );
+           $prepareStmt = mysqli_stmt_prepare( $stmt, $sql );
+
+           if ( $prepareStmt ) {
+            mysqli_stmt_bind_param( $stmt, "sss", $admin_name, $admin_email, $admin_pass_hash );
+            mysqli_stmt_execute( $stmt );
+
+            echo "<div class='alert alert-success'>Registration Success</div>";
+           } else {
+            die( "Something went wrong!" );
+           }
+          }
+         }
+        ?>
+        <form class="login-form" action="<?php echo htmlspecialchars( $_SERVER["PHP_SELF"] ); ?>" method="POST">
           <div class="field">
-            <input type="name" class="form-input" id="username" name="full_name" placeholder="Admin Name" value="<?php if ( isset( $_POST['registration'] ) ) {echo $full_name;} ?>">
-            <span class="text-danger"><?php if ( isset( $_POST['registration'] ) ) {echo $empmsg_full_name;} ?></span>
+            <input type="name" class="form-input" id="username" name="name" placeholder="Admin Name">
           </div>
           <div class="field">
-            <input type="email" class="form-input" id="useremail" name="email" placeholder="Admin Email" value="<?php if ( isset( $_POST['registration'] ) ) {echo $email;} ?>">
-            <span class="text-danger"><?php if ( isset( $_POST['registration'] ) ) {echo $empmsg_admin_email;} ?></span>
+            <input type="email" class="form-input" id="useremail" name="email" placeholder="Admin Email">
           </div>
           <div class="field">
             <input type="password" class="form-input" id="password" name="password" placeholder="Password">
-            <span class="text-danger"><?php if ( isset( $_POST['registration'] ) ) {echo $empmsg_admin_pass;} ?></span>
           </div>
           <div class="field">
             <input type="password" class="form-input" id="conpassword" name="con_password" placeholder="Confirm password">
-            <span class="text-danger"><?php if ( isset( $_POST['registration'] ) ) {echo $empmsg_confirm_password;} ?></span>
           </div>
           <div class="submit-btn">
             <button type="submit" name="registration" class="btn">Register</button>
@@ -98,6 +109,5 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/jquery-3.6.4.min.js"></script>
-  <script src="assets/js/main.js"></script>
 </body>
 </html>
