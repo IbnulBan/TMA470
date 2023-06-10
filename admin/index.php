@@ -33,61 +33,35 @@
           $admin_email = $_POST['email'];
           $admin_pass  = $_POST['password'];
 
-          $admin_pass_hash = md5( $password );
-
           $sql   = "SELECT * FROM admin WHERE email='$admin_email'";
           $query = mysqli_query( $conn, $sql );
 
           $adminUser = mysqli_fetch_array( $query, MYSQLI_ASSOC );
 
-          if($adminUser){
-
+          if ( $adminUser ) {
+           if ( password_verify( $admin_pass, $adminUser['password'] ) ) {
+            session_start();
+            $_SESSION['adminUser'] = 'yes';
+            header( 'Location:dashboard.php' );
+            die();
+           } else {
+            echo "<div class='alert alert-danger'>Password does not match!</div>";
+           }
+          } else {
+           echo "<div class='alert alert-danger'>Email does not match!</div>";
           }
-
-          // $empmsg_admin_email = "";
-          // $empmsg_admin_pass  = "";
-
-          // if ( empty( $email ) ) {
-          //   $empmsg_admin_email = "Provide valid Admin email";
-          // }
-
-          // if ( empty( $password ) ) {
-          //   $empmsg_admin_pass = "Provide correct password";
-          // }
-
-          // if ( !empty( $email ) && !empty( $password ) ) {
-          //   $sql = "SELECT * FROM admin WHERE email = '$email' AND password = '$admin_pass_hash'";
-
-          //   $query = $conn->query( $sql );
-
-          //   if ( $query->num_rows > 0 ) {
-          //     header( "Location:dashboard.php" );
-          //   } else {
-          //     echo "not found";
-          //   }
-          // }
-
          }
         ?>
-        <form id="login-form" class="login-form" action="<?php echo htmlspecialchars( $_SERVER["PHP_SELF"] ); ?>" method="post">
-          <div class="text-center">
-            <?php
-             if ( isset( $_GET['admincreate'] ) ) {
-              echo "Admin created Successfully.";
-             }
-            ?>
-          </div>
+        <form id="login-form" class="login-form" action="<?php echo htmlspecialchars( $_SERVER["PHP_SELF"] ); ?>" method="POST">
           <div class="avater">
             <img src="assets/images/avatar-1295397__340.webp" alt="profile">
           </div>
 
           <div class="field">
-            <input type="email" class="form-input" id="useremail" name="email" placeholder="Admin Email" value="<?php if ( isset( $_POST['login'] ) ) {echo $email;} ?>">
-            <span class="text-danger"><?php if ( isset( $_POST['login'] ) ) {echo $empmsg_admin_email;} ?></span>
+            <input type="email" class="form-input" id="useremail" name="email" placeholder="Admin Email">
           </div>
           <div class="field">
-            <input type="password" class="form-input" id="password" name="password" placeholder="password" value="<?php if ( isset( $_POST['login'] ) ) {echo $password;} ?>">
-            <span class="text-danger"><?php if ( isset( $_POST['login'] ) ) {echo $empmsg_admin_pass;} ?></span>
+            <input type="password" class="form-input" id="password" name="password" placeholder="password">
           </div>
           <div class="submit-btn">
             <button type="submit" class="btn" name="login">Login</button>

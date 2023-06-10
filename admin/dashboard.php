@@ -1,7 +1,13 @@
 <?php
+
+session_start();
+if ( !isset( $_SESSION['adminUser'] ) ) {
+    header( 'Location:index.php' );
+}
+
 require "../db_connect.php";
 
-$title="Admin Dashboard";
+$title = "Admin Dashboard";
 include 'header.php';
 ?>
         <div id="layoutSidenav">
@@ -110,5 +116,5 @@ include 'header.php';
                     </div>
                 </main>
 <?php
-include 'footer.php';
+    include 'footer.php';
 ?>

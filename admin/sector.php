@@ -1,28 +1,14 @@
 <?php
 
-    require "../db_connect.php";
+ session_start();
+ if ( !isset( $_SESSION['adminUser'] ) ) {
+  header( 'Location:index.php' );
+ }
 
-    if ( isset( $_POST['save'] ) ) {
+ require "../db_connect.php";
 
-        $new_sector = $_POST['name'];
-
-        $empmsg_add_sector = "";
-
-        if ( empty( $new_sector ) ) {
-            $empmsg_add_sector = "Please Add new sector";
-        }
-
-        if ( !empty( $new_sector ) ) {
-
-            $sql = "INSERT INTO business_category (name) VALUES ('$new_sector')";
-
-            if ( $conn->query( $sql ) ) {
-                header( 'Location:sector.php' );
-            }
-        }
-    }
-
-    include 'header.php';
+ $title = "All Business Sector";
+ include 'header.php';
 ?>
 
         <div id="layoutSidenav">
@@ -46,10 +32,6 @@
                             </a>
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
-                    </div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
@@ -70,7 +52,41 @@
                                     <form action="<?php echo htmlspecialchars( $_SERVER['PHP_SELF'] ); ?>" method="post" id="add_form" class="row">
                                         <div class="col-auto">
                                             <input type="text" class="form-control" id="add_sector" name="name" placeholder="Type New Sector">
-                                            <span class="text-danger"><?php if ( isset( $_POST['save'] ) ) {echo $empmsg_add_sector;} ?></span>
+                                            <?php
+                                             if ( isset( $_POST['save'] ) ) {
+
+                                              $add_sector = $_POST['name'];
+
+                                              $errors = array();
+
+                                              $sql      = "SELECT * FROM business_category WHERE name='$add_sector'";
+                                              $query    = mysqli_query( $conn, $sql );
+                                              $rowCount = mysqli_num_rows( $query );
+
+                                              if ( $rowCount > 0 ) {
+                                               array_push( $errors, "Sector already exists in the lists.." );
+                                              }
+
+                                              if ( count( $errors ) > 0 ) {
+                                               foreach ( $errors as $error ) {
+                                                echo "<div class='text-danger'>$error</div>";
+                                               }
+                                              } else {
+                                               $sql         = "INSERT INTO business_category (name) VALUES(?)";
+                                               $stmt        = mysqli_stmt_init( $conn );
+                                               $prepareStmt = mysqli_stmt_prepare( $stmt, $sql );
+
+                                               if ( $prepareStmt ) {
+                                                mysqli_stmt_bind_param( $stmt, "s", $add_sector );
+                                                mysqli_stmt_execute( $stmt );
+
+                                                echo "<div class='text-success'>Sector Added</div>";
+                                               } else {
+                                                die( "Something went wrong!" );
+                                               }
+                                              }
+                                             }
+                                            ?>
                                         </div>
                                         <div class="col-auto">
                                             <button type="submit" name="save" class="btn btn-success mb-3">Add Sector</button>
@@ -96,31 +112,34 @@
                                     </tfoot>
                                     <tbody>
                                     <?php
-                                        $n   = 1;
-                                        $sql = "SELECT * FROM business_category ORDER BY name ASC";
+                                     $n   = 1;
+                                     $sql = "SELECT * FROM business_category ORDER BY name ASC";
 
-                                        $result = $conn->query( $sql );
+                                     $result = $conn->query( $sql );
 
-                                        if ( $result ) {
-                                            while ( $data = mysqli_fetch_assoc( $result ) ) {
-                                            ?>
+                                     if ( $result ) {
+                                      while ( $data = mysqli_fetch_assoc( $result ) ) {
+
+                                        $cat_id=$data['id'];
+                                        $cat_name=$data['name'];
+                                      ?>
                                             <tr>
                                                 <td><?php echo $n; ?></td>
                                                 <td><?php echo $data['name']; ?></td>
                                                 <td>
-                                                    <a href="edit.php" class="btn btn-success">Edit</a>
-                                                    <a href="edit.php" class="btn btn-danger">Delete</a>
+                                                    <a href="edit_sector.php?id=<?php echo $cat_id; ?>" class="btn btn-success">Edit</a>
+                                                    <a href="delete_sector.php?id=<?php echo $cat_id; ?>" class="btn btn-danger">Delete</a>
                                                 </td>
                                             </tr>
                                             <?php
-                                                $n++;
-                                            }
-                                        }
-                                    ?>
+                                             $n++;
+                                              }
+                                             }
+                                            ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </main>
-<?php include 'footer.php';?>
+<?php include 'footer.php'; ?>

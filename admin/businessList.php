@@ -1,4 +1,10 @@
 <?php
+
+session_start();
+if ( !isset( $_SESSION['adminUser'] ) ) {
+ header( 'Location:index.php' );
+}
+
 require "../db_connect.php";
 
 $title="All Business Lists";
@@ -25,10 +31,6 @@ include 'header.php';
                                 Business Lists
                             </a>
                         </div>
-                    </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Admin
                     </div>
                 </nav>
             </div>
