@@ -120,22 +120,21 @@
                                      if ( $result ) {
                                       while ( $data = mysqli_fetch_assoc( $result ) ) {
 
-                                        $cat_id=$data['id'];
-                                        $cat_name=$data['name'];
+                                       $cat_id   = $data['id'];
+                                       $cat_name = $data['name'];
                                       ?>
-                                            <tr>
-                                                <td><?php echo $n; ?></td>
-                                                <td><?php echo $data['name']; ?></td>
-                                                <td>
-                                                    <a href="edit_sector.php?id=<?php echo $cat_id; ?>" class="btn btn-success">Edit</a>
-                                                    <a href="delete_sector.php?id=<?php echo $cat_id; ?>" class="btn btn-danger">Delete</a>
-                                                </td>
-                                            </tr>
-                                            <?php
-                                             $n++;
-                                              }
-                                             }
-                                            ?>
+                                        <tr>
+                                            <td><?php echo $n; ?></td>
+                                            <td><?php echo $data['name']; ?></td>
+                                            <td>
+                                                <a href="edit_sector.php?id=<?php echo $cat_id; ?>" class="btn btn-success">Edit</a>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                            $n++;
+                                        }
+                                    }
+                                    ?>
                                     </tbody>
                                 </table>
                             </div>

@@ -54,6 +54,9 @@ button.btn.btn-primary, .btn.reg_btn, .btn.btn-email {
 .btn.btn-email {
   width: 30%;
 }
+.btn.sector_btn{
+  padding: 15px 20px;
+}
 /* Main design part to update the page in various location */
 
 .right-bg {

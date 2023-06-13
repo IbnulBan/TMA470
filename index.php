@@ -1,6 +1,6 @@
 <?php
 
- require_once "db_connect.php";
+    require_once "db_connect.php";
 
 ?>
 
@@ -54,18 +54,19 @@
 
                         <div class="bus_types_btn d-flex flex-wrap">
                         <?php
-                         $sql = "SELECT * FROM business_category ORDER BY name ASC";
+                            $sql = "SELECT * FROM business_category ORDER BY name ASC";
 
-                         $result = $conn->query( $sql );
+                            $result = $conn->query( $sql );
 
-                         if ( $result ) {
-                          while ( $data = mysqli_fetch_assoc( $result ) ) {
-                          ?>
-                                <a href="businessLists.php" class="btn"><?php echo $data['name']; ?></a>
-                                <?php
-                                 }
-                                 }
+                            if ( $result ) {
+                                while ( $data = mysqli_fetch_assoc( $result ) ) {
+                                    $cat_name = $data['name'];
                                 ?>
+                                <a href="userBusinessLists.php?name=<?php echo $cat_name; ?>" class="btn sector_btn"><?php echo $data['name']; ?></a>
+                                <?php
+                                }
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
