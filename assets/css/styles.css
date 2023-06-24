@@ -1,0 +1,34 @@
+@charset "UTF-8";
+/*
+
+*/
+*, *::after, *::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Custom css */
+.nav-item:hover a, .nav-item:hover a:active, .nav-item:hover a:focus{
+    color: aqua;
+}
+.custom_btn{
+    background-image: linear-gradient(to right, #1F1C2C 0%, #928DAB  51%, #1F1C2C  100%);
+    margin: 10px;
+    padding: 10px 25px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+}
+.custom_btn:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+.wh-100{
+    width: 100px !important;
+    height: 100px !important;
+}

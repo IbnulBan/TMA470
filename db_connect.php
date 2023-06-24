@@ -1,13 +1,13 @@
 <?php
 
-$localhost  = "localhost";
-$dbuser     = "root";
-$dbpassword = "";
+$servername = "localhost";
+$username   = "root";
+$password   = "";
 $dbname     = "barkingdb";
 
-$conn = new mysqli( $localhost, $dbuser, $dbpassword, $dbname );
-
-if(!$conn){
-    die("Failed to connect with Database!");
+// Create connection
+$conn = new mysqli( $servername, $username, $password, $dbname );
+// Check connection
+if ( $conn->connect_error ) {
+    die( "Connection failed: " . $conn->connect_error );
 }
-?>

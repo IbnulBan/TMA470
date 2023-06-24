@@ -6,40 +6,21 @@ if ( !isset( $_SESSION['login'] ) ) {
 
 require "../db_connect.php";
 
-$title = "Admin Dashboard";
+$title = "Business Owner Lists";
 include "header.php";
 ?>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Dashboard</h1>
+                    <h1 class="mt-4">All Business Lists</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
+                        <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                        <li class="breadcrumb-item active">All Business Lists</li>
                     </ol>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">All Business Sector</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="busSector.php">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">All Business Owner Lists</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="businessLists.php">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            Business Owner lists
+                            Business Owner Lists
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
@@ -51,6 +32,9 @@ include "header.php";
                                         <th>Phone</th>
                                         <th>Email</th>
                                         <th>Business Sector</th>
+                                        <th>Address</th>
+                                        <th>URL</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,7 +64,9 @@ include "header.php";
                                         $user_phone     = $data['user_phone'];
                                         $user_email     = $data['user_email'];
                                         $shop_name      = $data['user_bus_name'];
+                                        $user_address   = $data['user_bus_add'];
                                         $sector_id      = $data['sector_id'];
+                                        $user_url       = $data['bus_url'];
                                     ?>
                                     <tr>
                                         <td><?php echo $n; ?></td>
@@ -89,13 +75,18 @@ include "header.php";
                                         <td><?php echo $user_phone; ?></td>
                                         <td><?php echo $user_email; ?></td>
                                         <td><?php echo $data_list[$sector_id]; ?></td>
+                                        <td><?php echo $user_address; ?></td>
+                                        <td><a href="../userPortal.php?name=<?php echo $shop_name; ?>" target="_blank"><?php echo $shop_name; ?></a></td>
+                                        <td>
+                                            <a href="listEdit.php?id=<?php echo $user_id; ?>" class="btn btn-success btn-sm">Edit</a>
+                                            <a href="listEdit.php?id=<?php echo $user_id; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                        </td>
                                     </tr>
                                     <?php
                                     $n++;
                                     }
                                 }
                                 ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>

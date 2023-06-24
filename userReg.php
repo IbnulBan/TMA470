@@ -1,118 +1,167 @@
 <?php
-
 require "db_connect.php";
 
- if ( isset( $_POST['submit'] ) ) {
 
-  $shop_name            = $_POST['shop_name'];
-  $owner_name           = $_POST['owner_name'];
-  $cell_number          = $_POST['cell_number'];
-  $email                = $_POST['email'];
-  $shop_description     = $_POST['shop_description'];
-  $business_category_id = $_POST['business_category_id'];
-  $upload_file          = $_POST['upload_file'];
 
-  $empmsg_sname    = "";
-  $empmsg_semail   = "";
-  $empmsg_sdetails = "";
-  $empmsg_b_cat    = "";
-
-  if ( empty( $shop_name ) ) {
-   $empmsg_sname = "Please fillup the Shop Name";
-  }
-
-  if ( empty( $email ) ) {
-   $empmsg_semail = "Please Provide a valid email";
-  }
-
-  if ( empty( $shop_description ) ) {
-   $empmsg_sdetails = "Please Provide all your offers in brief";
-  }
-
-  if ( empty( $business_category_id ) ) {
-   $empmsg_b_cat = "Please select the right business sector";
-  }
-
- }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Shop Registration</title>
-
-    <link rel="shortcut icon" href="assets/images/favicon/favicon.ico" type="image/x-icon">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Business Owner Registration</title>
+    <!-- Favicon-->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Bootstrap css-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Core theme CSS-->
+    <link href="assets/css/styles.css" rel="stylesheet" />
 </head>
+
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="offset-md-3 col-md-6 mt-5">
-                <div class="header-content d-flex align-items-center justify-content-between mb-4">
-                    <a href="index.php" class="home-icon fs-2 fw-bold"><i class="bi bi-house-fill"></i></a>
-                    <h2>Business Registration Form.</h2>
+    <!-- Header-->
+    <header class="bg-dark">
+        <div class="container">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <a class="navbar-brand text-white" href="index.php">Barking Portal</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                        <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="index.php">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="businessLists.php">Business Lists</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="userReg.php">User Registration</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="mailto:"><i class="bi bi-envelope-at-fill"></i>
+                                    Email Us</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <form action="<?php echo htmlspecialchars( $_SERVER["PHP_SELF"] ); ?>" method="post" id="reg_form" class="reg-form">
-                    <div class="mb-3">
-                        <label for="business_name" class="form-label">Name of your business (required)</label>
-                        <input type="text" class="form-control" name="shop_name" id="business_name">
-                        <span class="text-danger"><?php if ( isset( $_POST['submit'] ) ) {echo $empmsg_sname;} ?></span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Contact Person's name (optional)</label>
-                        <input type="text" class="form-control" name="owner_name" id="name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label">Contact phone number (optional)</label>
-                        <input type="text" class="form-control" name="cell_number" id="phone">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email address (required)</label>
-                        <input type="email" class="form-control" name="email" id="email">
-                        <span class="text-danger"><?php if ( isset( $_POST['submit'] ) ) {echo $empmsg_semail;} ?></span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">What your business offers - Please put as much details as you like for others to see (required)</label>
-                        <textarea class="form-control" name="shop_description" id="description" rows="3"></textarea>
-                        <span class="text-danger"><?php if ( isset( $_POST['submit'] ) ) {echo $empmsg_sdetails;} ?></span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="form-select" class="form-label">Choose your business sector from the dropdown list (required)</label>
-                        <select id="form-select" name="business_category_id" class="form-select">
-                            <option selected>Select Type</option>
-                            <option>Barber</option>
-                            <option>Construction</option>
-                            <option>DIY</option>
-                            <option>Dry cleaning</option>
-                            <option>Finance</option>
-                            <option>Food</option>
-                            <option>Production</option>
-                            <option>Retail</option>
-                            <option>Trade</option>
-                            <option>Others</option>
-                        </select>
-                        <span class="text-danger"><?php if ( isset( $_POST['submit'] ) ) {echo $empmsg_b_cat;} ?></span>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Please upload your shop's image (optional)</label>
-                        <input class="form-control" name="upload_file" type="file" id="formFile">
-                    </div>
-                    <div class="publishBtn text-center">
-                        <button type="submit" class="btn mb-5" name="submit">Submit & Publish</button>
-                    </div>
-                </form>
+            </nav>
+        </div>
+    </header>
+    <!-- Section-->
+    <section class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <?php
+                    if ( isset( $_POST['submit'] ) ) {
+                        $user_name        = $_POST['user_name'];
+                        $user_phone       = $_POST['user_phone'];
+                        $user_email       = $_POST['user_email'];
+                        $shop_name        = $_POST['user_bus_name'];
+                        $user_address     = $_POST['user_bus_add'];
+                        $business_details = $_POST['user_bus_desc'];
+                        $sector_id        = $_POST['sector_id'];
+
+                        $upload_img       = $_FILES['upload_img']['name'];
+                        $tmp_img_name     = $_FILES['upload_img']['tmp_name'];
+                        $upload           = 'upload_img/' . $upload_img;
+                        
+
+                        $sql = "INSERT INTO user (user_name, user_phone, user_email, user_bus_name, user_bus_add, user_bus_desc, sector_id, upload_img) VALUES('$user_name', '$user_phone', '$user_email', '$shop_name', '$user_address', '$business_details', '$sector_id', '$upload_img')";
+
+                        if ( $conn->query( $sql ) == TRUE ) {
+                            move_uploaded_file( $tmp_img_name, $upload );
+                            echo "<span class='text-success'>Data Inserted Successfully</span>";
+                        } else {
+                            echo "<span class='text-danger'>Data Not Inserted</span>";
+                        }
+                    }
+                    ?>
+                    <form class="row g-3" action="<?php echo htmlspecialchars( $_SERVER['PHP_SELF'] ); ?>" method="POST" enctype="multipart/form-data">
+                        <h2 class="text-center">Business Registration Form</h2>
+                        <div class="col-md-6">
+                            <label for="shop_name" class="form-label">Business Name (required)</label>
+                            <input type="text" class="form-control" id="shop_name" name="user_bus_name" placeholder="xyz company">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="owner_name" class="form-label">Contact Person's name (optional)</label>
+                            <input type="text" class="form-control" id="owner_name" name="user_name" placeholder="Jhon Doe">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label">Contact phone number (optional)</label>
+                            <input type="tel" class="form-control" id="phone" name="user_phone"
+                                placeholder="Enter valid phone number">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email address (required)</label>
+                            <input type="email" class="form-control" id="email" name="user_email"
+                                placeholder="Enter valid email address">
+                        </div>
+                        <div class="col-12">
+                            <label for="address" class="form-label">Business address (optional)</label>
+                            <input type="text" class="form-control" id="address" name="user_bus_add"
+                                placeholder="Enter Your Business address">
+                        </div>
+                        <div class="col-12">
+                            <label for="business_details" class="form-label">What your business offers - Please put as
+                                much details as you like for others to see (required)</label>
+                            <textarea class="form-control" name="user_bus_desc" id="business_details" cols="30"
+                                rows="10"
+                                placeholder="Please write details of you business offer for customer."></textarea>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="category" class="form-label">Choose business sector from the dropdown (required)</label>
+                            <select class="form-select" id="category" name="sector_id">
+                                <?php                                
+                                $sql_optn   = "SELECT * FROM category ORDER BY cat_name ASC";
+                                $query = $conn->query( $sql_optn );
+                                while ( $data = mysqli_fetch_assoc( $query ) ) {
+
+                                    $sectorId   = $data['cat_id'];
+                                    $sectorName = $data['cat_name'];
+                                    ?>
+                                    <option value="<?php echo $sectorId; ?>"><?php echo $sectorName; ?></option>;
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label for="upload_img" class="form-label">Please upload your shop's image (optional)</label>
+                            <input type="file" class="form-control" id="upload_img" name="upload_img"
+                                placeholder="Upload your business image">
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn custom_btn" name="submit">Submit & Publish</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-
+    </section>
+    <!-- Footer-->
+    <footer class="py-3 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">
+                Copyright &copy; Barking Portal 2023
+            </p>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/main.js"></script>
+    <!-- Core theme JS-->
+    <script src="assets/js/scripts.js"></script>
 </body>
+
 </html>
