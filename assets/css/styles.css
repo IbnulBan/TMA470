@@ -32,3 +32,10 @@
     width: 100px !important;
     height: 100px !important;
 }
+.userImg {
+    max-height: 330px;
+    height: 100%;
+}
+.section-height{
+    min-height: 90vh;
+}

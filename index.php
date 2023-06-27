@@ -1,5 +1,5 @@
 <?php
-	require "db_connect.php";
+require "db_connect.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +45,7 @@
 								<a class="nav-link text-white" href="userReg.php">User Registration</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-white" href="mailto:"><i class="bi bi-envelope-at-fill"></i>
+								<a class="nav-link text-white" href="mailto:admin@barkingportal.uk"><i class="bi bi-envelope-at-fill"></i>
 									Email Us</a>
 							</li>
 						</ul>
@@ -90,20 +90,20 @@
 						<!-- Sector lists Button-->
 						<div class="card-body p-3">
 						<?php
-							$sql = "SELECT * FROM category ORDER BY cat_name ASC";
+						$sql = "SELECT * FROM category ORDER BY cat_name ASC";
 
-							$result = $conn->query( $sql );
+						$result = $conn->query( $sql );
 
-							if ( $result ) {
-								while ( $data = mysqli_fetch_assoc( $result ) ) {
-									$cat_id   = $data['cat_id'];
-									$cat_name = $data['cat_name'];
-								?>
-							<a href="ownerList.php?cat_name=<?php echo $cat_name; ?>" class="btn custom_btn m-1"><?php echo $data['cat_name']; ?></a>
-							<?php
-								}
-								}
+						if ( $result ) {
+							while ( $data = mysqli_fetch_assoc( $result ) ) {
+								$cat_id = $data['cat_id'];
+								$cat_name = $data['cat_name'];
 							?>
+							<a href="ownerList.php?cat_name=<?php echo $cat_name;?>" class="btn custom_btn m-1"><?php echo $data['cat_name']; ?></a>
+							<?php
+							}
+						}
+						?>
 						</div>
 						<!-- Sector info-->
 						<div class="card-footer border-top-0 bg-transparent">

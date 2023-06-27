@@ -61,7 +61,7 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
                                 <a class="nav-link text-white" href="userReg.php">User Registration</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="mailto:"><i class="bi bi-envelope-at-fill"></i>
+                                <a class="nav-link text-white" href="mailto:admin@barkingportal.uk"><i class="bi bi-envelope-at-fill"></i>
                                     Email Us</a>
                             </li>
                         </ul>
@@ -130,7 +130,7 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
                                 <td><?php echo $user_email; ?></td>
                                 <td><?php echo $data_list[$sector_id]; ?></td>
                                 <td><?php echo $user_address; ?></td>
-                                <td><a href="userPortal.php?name=<?php echo /*str_replace(' ', '-', $shop_name)*/$shop_name; ?>"><?php echo $shop_name; ?></a></td>
+                                <td><a href="userPortal.php?name=<?php echo $shop_name; ?>"><?php echo $shop_name; ?></a></td>
                             </tr>
                             <?php
                             $n++;

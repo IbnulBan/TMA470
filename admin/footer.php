@@ -1,4 +1,4 @@
-<footer class="py-4 bg-dark mt-auto">
+            <footer class="py-4 bg-dark mt-auto">
                 <div class="container-fluid px-4">
                     <div class="text-end small">
                         <div class="text-muted">Copyright &copy; Local Business Portal 2023</div>

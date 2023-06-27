@@ -58,7 +58,7 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
 								<a class="nav-link text-white" href="userReg.php">User Registration</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-white" href="mailto:"><i class="bi bi-envelope-at-fill"></i>
+								<a class="nav-link text-white" href="mailto:admin@barkingportal.uk"><i class="bi bi-envelope-at-fill"></i>
 									Email Us</a>
 							</li>
 						</ul>
@@ -68,7 +68,7 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
 		</div>
 	</header>
 	<!-- Section-->
-	<section class="py-4">
+	<section class="section-height py-4">
 		<div class="container">
 			<div class="row g-1 g-lg-1">
 				<?php
@@ -96,13 +96,24 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
 					<div class="card">
 						<div class="row">
 							<div class="col-6 col-md-4">
-								<img src="<?php echo 'upload_img/' . $upload; ?>" class="img-fluid rounded-start" alt="Barking Portal">
+							<?php
+							if(!empty($upload)){
+								?>
+								<img src="<?php echo 'upload_img/' . $upload; ?>" class="img-fluid rounded-start userImg" alt="<?php echo $shop_name; ?>">
+								<?php
+							}else{
+								?>
+								<img src="assets/images/businessImg.jpg" class="img-fluid rounded-start userImg" alt="<?php echo $shop_name; ?>">
+								<?php
+							}
+							?>
+								<!--<img src="<?php //echo 'upload_img/' . $upload; ?>" class="img-fluid rounded-start userImg" alt="Barking Portal">-->
 							</div>
 							<div class="col-6 col-md-8">
 								<div class="card-body">
 									<h2 class="card-title"><?php echo $shop_name; ?></h2>
 									<p class="card-text"><?php echo 'Owner Name: ' . $user_name; ?></p>
-									<p class="card-text"><?php echo 'Contact Phone: ' . $user_phone; ?></p>
+									<p class="card-text"><?php echo 'Contact Phone: 0' . $user_phone; ?></p>
 									<p class="card-text"><?php echo 'Contact Email: ' . $user_email; ?></p>
 									<p class="card-text"><?php echo 'Shop Address: ' . $user_address; ?></p>
 									<p class="card-text"><?php echo 'Business Type: ' . $data_list[$sector_id]; ?></p>

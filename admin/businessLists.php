@@ -6,6 +6,19 @@ if ( !isset( $_SESSION['login'] ) ) {
 
 require "../db_connect.php";
 
+if ( isset( $_GET['delete_id'] ) ) {
+    $deleteid = $_GET['delete_id'];
+
+    $sql2   = "DELETE FROM user WHERE user_id='$deleteid'";
+    $query2 = $conn->query( $sql2 );
+
+    if ( $query2 == TRUE ) {
+        echo "<script>alert('Business owner deleted.');</script>";
+        header('Location:businessLists.php');
+    }
+
+}
+
 $title = "Business Owner Lists";
 include "header.php";
 ?>
@@ -79,7 +92,7 @@ include "header.php";
                                         <td><a href="../userPortal.php?name=<?php echo $shop_name; ?>" target="_blank"><?php echo $shop_name; ?></a></td>
                                         <td>
                                             <a href="listEdit.php?id=<?php echo $user_id; ?>" class="btn btn-success btn-sm">Edit</a>
-                                            <a href="listEdit.php?id=<?php echo $user_id; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                            <a href="businessLists.php?delete_id=<?php echo $user_id; ?>" class="btn btn-danger btn-sm">Delete</a>
                                         </td>
                                     </tr>
                                     <?php

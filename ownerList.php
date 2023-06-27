@@ -61,7 +61,7 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
                                 <a class="nav-link text-white" href="userReg.php">User Registration</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="mailto:"><i class="bi bi-envelope-at-fill"></i>
+                                <a class="nav-link text-white" href="mailto:admin@barkingportal.uk"><i class="bi bi-envelope-at-fill"></i>
                                     Email Us</a>
                             </li>
                         </ul>

@@ -41,7 +41,7 @@
                             Dashboard
                         </a>
                         <div class="sb-sidenav-menu-heading">Options</div>
-                        <a class="nav-link" href="busSectors.php">
+                        <a class="nav-link" href="busSector.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-vector-square"></i></div>
                             Business Sectors
                         </a>

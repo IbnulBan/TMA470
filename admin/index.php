@@ -62,7 +62,7 @@ if ( isset( $_POST['login'] ) ) {
 				<h2 class="text-center mt-5">Admin Login</h2>
 				<?php
 				if ( isset( $_GET['adminCreated'] ) ) {
-					echo "Admin Created Successfully.";
+					echo "<p class='text-success text-center'>Admin Created Successfully.</p>";
 				}
 				?>
 				<div class="card bg-info my-3">

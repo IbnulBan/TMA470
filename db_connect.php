@@ -1,9 +1,9 @@
 <?php
 
 $servername = "localhost";
-$username   = "root";
-$password   = "";
-$dbname     = "barkingdb";
+$username   = "barkingportal_portal";
+$password   = "JKG]Cd-ys%34";
+$dbname     = "barkingportal_localPortal";
 
 // Create connection
 $conn = new mysqli( $servername, $username, $password, $dbname );

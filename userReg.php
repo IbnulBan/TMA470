@@ -49,7 +49,7 @@ require "db_connect.php";
                                 <a class="nav-link text-white" href="userReg.php">User Registration</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="mailto:"><i class="bi bi-envelope-at-fill"></i>
+                                <a class="nav-link text-white" href="mailto:admin@barkingportal.uk"><i class="bi bi-envelope-at-fill"></i>
                                     Email Us</a>
                             </li>
                         </ul>
@@ -82,7 +82,7 @@ require "db_connect.php";
 
                         if ( $conn->query( $sql ) == TRUE ) {
                             move_uploaded_file( $tmp_img_name, $upload );
-                            echo "<span class='text-success'>Data Inserted Successfully</span>";
+                            echo "<script>alert('Data Inserted Successfully');</script>";
                         } else {
                             echo "<span class='text-danger'>Data Not Inserted</span>";
                         }
@@ -123,6 +123,7 @@ require "db_connect.php";
                         <div class="col-md-6">
                             <label for="category" class="form-label">Choose business sector from the dropdown (required)</label>
                             <select class="form-select" id="category" name="sector_id">
+                                <option value="" selected="selected" disabled>Select business type</option>
                                 <?php                                
                                 $sql_optn   = "SELECT * FROM category ORDER BY cat_name ASC";
                                 $query = $conn->query( $sql_optn );
@@ -146,6 +147,43 @@ require "db_connect.php";
                             <button type="submit" class="btn custom_btn" name="submit">Submit & Publish</button>
                         </div>
                     </form>
+                    <?php
+
+                    use PHPMailer\PHPMailer\PHPMailer;
+                    use PHPMailer\PHPMailer\Exception;
+                    use PHPMailer\PHPMailer\SMTP;
+
+
+                    require "./PHPMailer/src/PHPMailer.php";
+                    require "./PHPMailer/src/Exception.php";
+                    require "./PHPMailer/src/SMTP.php";
+
+                    if(isset($_POST['submit'])){
+                        $user_name        = htmlentities( $_POST['user_name'] );
+                        $user_phone       = htmlentities( $_POST['user_phone'] );
+                        $user_email       = htmlentities( $_POST['user_email'] );
+                        $shop_name        = htmlentities( $_POST['user_bus_name'] );
+                        $user_address     = htmlentities( $_POST['user_bus_add'] );
+                        $business_details = htmlentities( $_POST['user_bus_desc'] );
+                        $sector_id        = htmlentities( $_POST['sector_id'] );
+
+                        $mail = new PHPMailer( true );
+                        $mail->isSMTP();
+                        $mail->Host       = 'mail.barkingportal.uk';
+                        $mail->SMTPAuth   = true;
+                        $mail->Username   = 'admin@barkingportal.uk';
+                        $mail->Password   = 'Nq.M2(y)S$;j';
+                        $mail->Port       = 465;
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->isHTML( true );
+                        $mail->setFrom( 'admin@barkingportal.uk' );
+                        $mail->addAddress( $user_email );
+                        $mail->Subject = 'Thank You For Register.';
+                        $mail->Body    = "Hi ".$user_name.",<br> Thank you for register in Barking Portal. Please click the Link <a href='https://barkingportal.uk/userPortal.php?name=".$shop_name."'>".$shop_name."</a> to view your page in Barking Portal site.<br> Please reply if you need anything modify.<br><br><strong>Barking Portal</strong>";
+                        $mail->send();
+
+                    }
+                    ?>
                 </div>
             </div>
         </div>
