@@ -1,7 +1,5 @@
 <?php
-require "db_connect.php";
-
-
+    require "db_connect.php";
 
 ?>
 
@@ -64,29 +62,28 @@ require "db_connect.php";
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <?php
-                    if ( isset( $_POST['submit'] ) ) {
-                        $user_name        = $_POST['user_name'];
-                        $user_phone       = $_POST['user_phone'];
-                        $user_email       = $_POST['user_email'];
-                        $shop_name        = $_POST['user_bus_name'];
-                        $user_address     = $_POST['user_bus_add'];
-                        $business_details = $_POST['user_bus_desc'];
-                        $sector_id        = $_POST['sector_id'];
+                        if ( isset( $_POST['submit'] ) ) {
+                            $user_name        = $_POST['user_name'];
+                            $user_phone       = $_POST['user_phone'];
+                            $user_email       = $_POST['user_email'];
+                            $shop_name        = $_POST['user_bus_name'];
+                            $user_address     = $_POST['user_bus_add'];
+                            $business_details = $_POST['user_bus_desc'];
+                            $sector_id        = $_POST['sector_id'];
 
-                        $upload_img       = $_FILES['upload_img']['name'];
-                        $tmp_img_name     = $_FILES['upload_img']['tmp_name'];
-                        $upload           = 'upload_img/' . $upload_img;
-                        
+                            $upload_img   = $_FILES['upload_img']['name'];
+                            $tmp_img_name = $_FILES['upload_img']['tmp_name'];
+                            $upload       = 'upload_img/' . $upload_img;
 
-                        $sql = "INSERT INTO user (user_name, user_phone, user_email, user_bus_name, user_bus_add, user_bus_desc, sector_id, upload_img) VALUES('$user_name', '$user_phone', '$user_email', '$shop_name', '$user_address', '$business_details', '$sector_id', '$upload_img')";
+                            $sql = "INSERT INTO user (user_name, user_phone, user_email, user_bus_name, user_bus_add, user_bus_desc, sector_id, upload_img) VALUES('$user_name', '$user_phone', '$user_email', '$shop_name', '$user_address', '$business_details', '$sector_id', '$upload_img')";
 
-                        if ( $conn->query( $sql ) == TRUE ) {
-                            move_uploaded_file( $tmp_img_name, $upload );
-                            echo "<script>alert('Data Inserted Successfully');</script>";
-                        } else {
-                            echo "<span class='text-danger'>Data Not Inserted</span>";
+                            if ( $conn->query( $sql ) == TRUE ) {
+                                move_uploaded_file( $tmp_img_name, $upload );
+                                echo "<script>alert('Data Inserted Successfully');</script>";
+                            } else {
+                                echo "<span class='text-danger'>Data Not Inserted</span>";
+                            }
                         }
-                    }
                     ?>
                     <form class="row g-3" action="<?php echo htmlspecialchars( $_SERVER['PHP_SELF'] ); ?>" method="POST" enctype="multipart/form-data">
                         <h2 class="text-center">Business Registration Form</h2>
@@ -124,18 +121,18 @@ require "db_connect.php";
                             <label for="category" class="form-label">Choose business sector from the dropdown (required)</label>
                             <select class="form-select" id="category" name="sector_id">
                                 <option value="" selected="selected" disabled>Select business type</option>
-                                <?php                                
-                                $sql_optn   = "SELECT * FROM category ORDER BY cat_name ASC";
-                                $query = $conn->query( $sql_optn );
-                                while ( $data = mysqli_fetch_assoc( $query ) ) {
+                                <?php
+                                    $sql_optn = "SELECT * FROM category ORDER BY cat_name ASC";
+                                    $query    = $conn->query( $sql_optn );
+                                    while ( $data = mysqli_fetch_assoc( $query ) ) {
 
-                                    $sectorId   = $data['cat_id'];
-                                    $sectorName = $data['cat_name'];
+                                        $sectorId   = $data['cat_id'];
+                                        $sectorName = $data['cat_name'];
                                     ?>
                                     <option value="<?php echo $sectorId; ?>"><?php echo $sectorName; ?></option>;
                                     <?php
-                                }
-                                ?>
+                                        }
+                                    ?>
                             </select>
                         </div>
                         <div class="col-6">
@@ -149,40 +146,38 @@ require "db_connect.php";
                     </form>
                     <?php
 
-                    use PHPMailer\PHPMailer\PHPMailer;
-                    use PHPMailer\PHPMailer\Exception;
-                    use PHPMailer\PHPMailer\SMTP;
+                        use PHPMailer\PHPMailer\PHPMailer;
+                        use PHPMailer\PHPMailer\SMTP;
 
+                        require "./PHPMailer/src/PHPMailer.php";
+                        require "./PHPMailer/src/Exception.php";
+                        require "./PHPMailer/src/SMTP.php";
 
-                    require "./PHPMailer/src/PHPMailer.php";
-                    require "./PHPMailer/src/Exception.php";
-                    require "./PHPMailer/src/SMTP.php";
+                        if ( isset( $_POST['submit'] ) ) {
+                            $user_name        = htmlentities( $_POST['user_name'] );
+                            $user_phone       = htmlentities( $_POST['user_phone'] );
+                            $user_email       = htmlentities( $_POST['user_email'] );
+                            $shop_name        = htmlentities( $_POST['user_bus_name'] );
+                            $user_address     = htmlentities( $_POST['user_bus_add'] );
+                            $business_details = htmlentities( $_POST['user_bus_desc'] );
+                            $sector_id        = htmlentities( $_POST['sector_id'] );
 
-                    if(isset($_POST['submit'])){
-                        $user_name        = htmlentities( $_POST['user_name'] );
-                        $user_phone       = htmlentities( $_POST['user_phone'] );
-                        $user_email       = htmlentities( $_POST['user_email'] );
-                        $shop_name        = htmlentities( $_POST['user_bus_name'] );
-                        $user_address     = htmlentities( $_POST['user_bus_add'] );
-                        $business_details = htmlentities( $_POST['user_bus_desc'] );
-                        $sector_id        = htmlentities( $_POST['sector_id'] );
+                            $mail = new PHPMailer( true );
+                            $mail->isSMTP();
+                            $mail->Host       = 'mail.barkingportal.uk';
+                            $mail->SMTPAuth   = true;
+                            $mail->Username   = 'admin@barkingportal.uk';
+                            $mail->Password   = 'Nq.M2(y)S$;j';
+                            $mail->Port       = 465;
+                            $mail->SMTPSecure = 'ssl';
+                            $mail->isHTML( true );
+                            $mail->setFrom( 'admin@barkingportal.uk' );
+                            $mail->addAddress( $user_email );
+                            $mail->Subject = 'Thank You For Register.';
+                            $mail->Body    = "Hi " . $user_name . ",<br> Thank you for register in Barking Portal. Please click the Link <a href='https://barkingportal.uk/userPortal.php?name=" . $shop_name . "'>" . $shop_name . "</a> to view your page in Barking Portal site.<br> Please reply if you need anything to modify.<br><br><strong>Barking Portal</strong>";
+                            $mail->send();
 
-                        $mail = new PHPMailer( true );
-                        $mail->isSMTP();
-                        $mail->Host       = 'mail.barkingportal.uk';
-                        $mail->SMTPAuth   = true;
-                        $mail->Username   = 'admin@barkingportal.uk';
-                        $mail->Password   = 'Nq.M2(y)S$;j';
-                        $mail->Port       = 465;
-                        $mail->SMTPSecure = 'ssl';
-                        $mail->isHTML( true );
-                        $mail->setFrom( 'admin@barkingportal.uk' );
-                        $mail->addAddress( $user_email );
-                        $mail->Subject = 'Thank You For Register.';
-                        $mail->Body    = "Hi ".$user_name.",<br> Thank you for register in Barking Portal. Please click the Link <a href='https://barkingportal.uk/userPortal.php?name=".$shop_name."'>".$shop_name."</a> to view your page in Barking Portal site.<br> Please reply if you need anything modify.<br><br><strong>Barking Portal</strong>";
-                        $mail->send();
-
-                    }
+                        }
                     ?>
                 </div>
             </div>

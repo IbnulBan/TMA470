@@ -1,5 +1,5 @@
 <?php
-require "db_connect.php";
+    require "db_connect.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +75,7 @@ require "db_connect.php";
 					<div class="card mt-1">
 						<!-- Portal details-->
 						<div class="card-body p-4">
-							<p class="fs-5">We like to help local businesses move into wider Internet arena. Where you can reach a larger audience and find new customer. Our goal is to provide you a simple solution to publish your business webpage for free. You see the sectors link on th eright side and your business can be visible there as well.</p>
+							<p class="fs-5">We like to help local businesses move into wider Internet arena. Where you can reach a larger audience and find new customer. Our goal is to provide you a simple solution to publish your business webpage for free. You see the sectors link on the right side and your business can be visible there once you register.</p>
 							<p class="card-text m-0">You need to register your details and fill up few fields and publish your web page in less than 5 minutes.</p>
 							<div class="registrationBtn text-center pb-3">
 								<a href="userReg.php" class="btn custom_btn">Click To Register</a>
@@ -90,20 +90,20 @@ require "db_connect.php";
 						<!-- Sector lists Button-->
 						<div class="card-body p-3">
 						<?php
-						$sql = "SELECT * FROM category ORDER BY cat_name ASC";
+                            $sql = "SELECT * FROM category ORDER BY cat_name ASC";
 
-						$result = $conn->query( $sql );
+                            $result = $conn->query( $sql );
 
-						if ( $result ) {
-							while ( $data = mysqli_fetch_assoc( $result ) ) {
-								$cat_id = $data['cat_id'];
-								$cat_name = $data['cat_name'];
-							?>
-							<a href="ownerList.php?cat_name=<?php echo $cat_name;?>" class="btn custom_btn m-1"><?php echo $data['cat_name']; ?></a>
+                            if ( $result ) {
+                                while ( $data = mysqli_fetch_assoc( $result ) ) {
+                                    $cat_id   = $data['cat_id'];
+                                    $cat_name = $data['cat_name'];
+                                ?>
+							<a href="ownerList.php?cat_name=<?php echo $cat_name; ?>" class="btn custom_btn m-1"><?php echo $data['cat_name']; ?></a>
 							<?php
-							}
-						}
-						?>
+                                }
+                                }
+                            ?>
 						</div>
 						<!-- Sector info-->
 						<div class="card-footer border-top-0 bg-transparent">
