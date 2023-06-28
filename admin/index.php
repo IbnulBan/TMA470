@@ -83,7 +83,7 @@ if ( isset( $_POST['login'] ) ) {
 						<div class="text-center">
 							<button type="submit" class="btn custom_btn" name="login">Login</button>
 						</div>
-						<div class="text-center">Not Registered? <a href="adminReg.php" class="text-dark fw-bold">Create an Account</a>
+						<!-- <div class="text-center">Not Registered? <a href="#" class="text-dark fw-bold">Create an Account</a> -->
 						</div>
 					</form>
 				</div>
