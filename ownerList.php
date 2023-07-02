@@ -1,6 +1,8 @@
 <?php
 require "db_connect.php";
 
+$getCatid = $_GET['cat_id'];
+
 $sql1   = "SELECT * FROM category";
 $query1 = $conn->query($sql1);
 
@@ -22,7 +24,7 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Business Owner Lists</title>
+    <title>Owner Lists</title>
     <!-- Favicon-->
     <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
@@ -71,15 +73,9 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
         </div>
     </header>
     <!-- Section-->
-    <section class="py-4">
+    <section class="section-height py-4">
         <div class="container">
-            <h2 class="text-white text-center bg-primary py-3 mb-4">All 
-            <?php
-            if ( isset($_GET['cat_name']) ) {
-                echo ( $_GET['cat_name'] ).' Owner Lists';
-            }
-            ?>
-            </h2>
+            <h2 class="text-white text-center bg-primary py-3 mb-4">All Business Lists</h2>
             <div class="card mb-4">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div class="table-title">
@@ -106,34 +102,31 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
 
                         $n = 1;
 
-                        $sql = "SELECT * FROM user";
+                        $sql = "SELECT * FROM user WHERE sector_id='$getCatid'";
                         $query = $conn->query($sql);
 
-                        if ($query) {
-                            while ($data = mysqli_fetch_assoc($query)) {
+                        while ($data = mysqli_fetch_assoc($query)) {
 
-                                $user_id        = $data['user_id'];
-                                $user_name      = $data['user_name'];
-                                $user_phone     = $data['user_phone'];
-                                $user_email     = $data['user_email'];
-                                $shop_name      = $data['user_bus_name'];
-                                $user_address   = $data['user_bus_add'];
-                                $sector_id      = $data['sector_id'];
-                                $user_url       = $data['bus_url'];
-                            ?>
-                            <tr>
-                                <td><?php echo $n; ?></td>
-                                <td><?php echo $shop_name; ?></td>
-                                <td><?php echo $user_name; ?></td>
-                                <td><?php echo $user_phone; ?></td>
-                                <td><?php echo $user_email; ?></td>
-                                <td><?php echo $data_list[$sector_id]; ?></td>
-                                <td><?php echo $user_address; ?></td>
-                                <td><a href="userPortal.php?name=<?php echo $shop_name; ?>"><?php echo $shop_name; ?></a></td>
-                            </tr>
-                            <?php
-                            $n++;
-                            }
+                            $user_id        = $data['user_id'];
+                            $user_name      = $data['user_name'];
+                            $user_phone     = $data['user_phone'];
+                            $user_email     = $data['user_email'];
+                            $shop_name      = $data['user_bus_name'];
+                            $user_address   = $data['user_bus_add'];
+                            $sector_id      = $data['sector_id'];
+                            $user_url       = $data['bus_url'];
+                        ?>
+                        <tr>
+                            <td><?php echo $n++; ?></td>
+                            <td><?php echo $shop_name; ?></td>
+                            <td><?php echo $user_name; ?></td>
+                            <td><?php echo $user_phone; ?></td>
+                            <td><?php echo $user_email; ?></td>
+                            <td><?php echo $data_list[$sector_id]; ?></td>
+                            <td><?php echo $user_address; ?></td>
+                            <td><a href="userPortal.php?name=<?php echo $shop_name; ?>"><?php echo $shop_name; ?></a></td>
+                        </tr>
+                        <?php
                         }
                         ?>
                         </tbody>

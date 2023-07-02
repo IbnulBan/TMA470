@@ -71,7 +71,7 @@ while ($data1 = mysqli_fetch_assoc($query1)) {
         </div>
     </header>
     <!-- Section-->
-    <section class="py-4">
+    <section class="section-height py-4">
         <div class="container">
             <h2 class="text-white text-center bg-primary py-3 mb-4">All 
                 <?php

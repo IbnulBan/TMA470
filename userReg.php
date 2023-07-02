@@ -1,5 +1,5 @@
 <?php
-    require "db_connect.php";
+require "db_connect.php";
 
 ?>
 
@@ -57,39 +57,72 @@
         </div>
     </header>
     <!-- Section-->
-    <section class="py-4">
+    <section class="section-height py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     <?php
-                        if ( isset( $_POST['submit'] ) ) {
-                            $user_name        = $_POST['user_name'];
-                            $user_phone       = $_POST['user_phone'];
-                            $user_email       = $_POST['user_email'];
-                            $shop_name        = $_POST['user_bus_name'];
-                            $user_address     = $_POST['user_bus_add'];
-                            $business_details = $_POST['user_bus_desc'];
-                            $sector_id        = $_POST['sector_id'];
+                    $err_shopName = $err_email = $err_details = $err_sector = "";
+                    
+                    if ( isset( $_POST['submit'] ) ) {
+                        $user_name        = mysqli_real_escape_string( $conn, $_POST['user_name'] );
+                        $user_phone       = mysqli_real_escape_string( $conn, $_POST['user_phone'] );
+                        $user_email       = mysqli_real_escape_string( $conn, $_POST['user_email'] );
+                        $shop_name        = mysqli_real_escape_string( $conn, $_POST['user_bus_name'] );
+                        $user_address     = mysqli_real_escape_string( $conn, $_POST['user_bus_add'] );
+                        $business_details = mysqli_real_escape_string( $conn, $_POST['user_bus_desc'] );
+                        $sector_id        = mysqli_real_escape_string( $conn, $_POST['sector_id'] );
 
-                            $upload_img   = $_FILES['upload_img']['name'];
-                            $tmp_img_name = $_FILES['upload_img']['tmp_name'];
-                            $upload       = 'upload_img/' . $upload_img;
+                        $upload_img       = $_FILES['upload_img']['name'];
+                        $tmp_img_name     = $_FILES['upload_img']['tmp_name'];
+                        $upload           = 'upload_img/' . $upload_img;
+                        
+                        if ( empty( $shop_name ) ) {
+                            $err_shopName = "Business name required";
+                        }
+                        if ( !filter_var( $user_email, FILTER_VALIDATE_EMAIL ) ) {
+                            $err_email = "Valid email is required";
+                        }
+                        if ( empty( $business_details ) ) {
+                            $err_details = "Business details field is required";
+                        }
+                        if ( empty( $sector_id ) ) {
+                            $err_sector = "Select business type";
+                        }
+                        
+                        if ( !empty( $shop_name ) && !empty( $user_email ) && !empty( $business_details ) && !empty( $sector_id ) ) {
 
                             $sql = "INSERT INTO user (user_name, user_phone, user_email, user_bus_name, user_bus_add, user_bus_desc, sector_id, upload_img) VALUES('$user_name', '$user_phone', '$user_email', '$shop_name', '$user_address', '$business_details', '$sector_id', '$upload_img')";
+                            
+                            $query = $conn->query( $sql );
 
-                            if ( $conn->query( $sql ) == TRUE ) {
+                            if ( $query == TRUE ) {
                                 move_uploaded_file( $tmp_img_name, $upload );
                                 echo "<script>alert('Data Inserted Successfully');</script>";
                             } else {
-                                echo "<span class='text-danger'>Data Not Inserted</span>";
+                                echo "<script>alert('Data Not Inserted');</script>";
                             }
                         }
+                        // else{
+                        //     echo "<script>alert('Please fill up the required field');</script>";
+                        // }
+
+                        
+
+                        // if ( $conn->query( $sql ) == TRUE ) {
+                        //     move_uploaded_file( $tmp_img_name, $upload );
+                        //     echo "<script>alert('Data Inserted Successfully');</script>";
+                        // } else {
+                        //     echo "<span class='text-danger'>Data Not Inserted</span>";
+                        // }
+                    }
                     ?>
                     <form class="row g-3" action="<?php echo htmlspecialchars( $_SERVER['PHP_SELF'] ); ?>" method="POST" enctype="multipart/form-data">
                         <h2 class="text-center">Business Registration Form</h2>
                         <div class="col-md-6">
                             <label for="shop_name" class="form-label">Business Name (required)</label>
                             <input type="text" class="form-control" id="shop_name" name="user_bus_name" placeholder="xyz company">
+                            <?php if ( isset( $_POST['submit'] ) ) {echo "<span class='text-danger'>" . $err_shopName . "</span>";}?>
                         </div>
                         <div class="col-md-6">
                             <label for="owner_name" class="form-label">Contact Person's name (optional)</label>
@@ -97,43 +130,40 @@
                         </div>
                         <div class="col-md-6">
                             <label for="phone" class="form-label">Contact phone number (optional)</label>
-                            <input type="tel" class="form-control" id="phone" name="user_phone"
-                                placeholder="Enter valid phone number">
+                            <input type="tel" class="form-control" id="phone" name="user_phone" placeholder="Enter valid phone number">
                         </div>
                         <div class="col-md-6">
                             <label for="email" class="form-label">Email address (required)</label>
-                            <input type="email" class="form-control" id="email" name="user_email"
-                                placeholder="Enter valid email address">
+                            <input type="email" class="form-control" id="email" name="user_email" placeholder="Enter valid email address">
+                            <?php if ( isset( $_POST['submit'] ) ) {echo "<span class='text-danger'>" . $err_email . "</span>";}?>
                         </div>
                         <div class="col-12">
                             <label for="address" class="form-label">Business address (optional)</label>
-                            <input type="text" class="form-control" id="address" name="user_bus_add"
-                                placeholder="Enter Your Business address">
+                            <input type="text" class="form-control" id="address" name="user_bus_add" placeholder="Enter Your Business address">
                         </div>
                         <div class="col-12">
-                            <label for="business_details" class="form-label">What your business offers - Please put as
-                                much details as you like for others to see (required)</label>
-                            <textarea class="form-control" name="user_bus_desc" id="business_details" cols="30"
-                                rows="10"
-                                placeholder="Please write details of you business offer for customer."></textarea>
+                            <label for="business_details" class="form-label">What your business offers - Please put as much details as you like for others to see (required)</label>
+                            <textarea class="form-control" name="user_bus_desc" id="business_details" cols="30" rows="10" placeholder="Please write details of you business offer for customer."></textarea>
+                            <?php if ( isset( $_POST['submit'] ) ) {echo "<span class='text-danger'>" . $err_details . "</span>";}?>
                         </div>
                         <div class="col-md-6">
                             <label for="category" class="form-label">Choose business sector from the dropdown (required)</label>
                             <select class="form-select" id="category" name="sector_id">
                                 <option value="" selected="selected" disabled>Select business type</option>
-                                <?php
-                                    $sql_optn = "SELECT * FROM category ORDER BY cat_name ASC";
-                                    $query    = $conn->query( $sql_optn );
-                                    while ( $data = mysqli_fetch_assoc( $query ) ) {
+                                <?php                                
+                                $sql_optn   = "SELECT * FROM category ORDER BY cat_name ASC";
+                                $query = $conn->query( $sql_optn );
+                                while ( $data = mysqli_fetch_assoc( $query ) ) {
 
-                                        $sectorId   = $data['cat_id'];
-                                        $sectorName = $data['cat_name'];
+                                    $sectorId   = $data['cat_id'];
+                                    $sectorName = $data['cat_name'];
                                     ?>
                                     <option value="<?php echo $sectorId; ?>"><?php echo $sectorName; ?></option>;
                                     <?php
-                                        }
-                                    ?>
+                                }
+                                ?>
                             </select>
+                            <?php if ( isset( $_POST['submit'] ) ) {echo "<span class='text-danger'>" . $err_sector . "</span>";}?>
                         </div>
                         <div class="col-6">
                             <label for="upload_img" class="form-label">Please upload your shop's image (optional)</label>
@@ -146,38 +176,40 @@
                     </form>
                     <?php
 
-                        use PHPMailer\PHPMailer\PHPMailer;
-                        use PHPMailer\PHPMailer\SMTP;
+                    use PHPMailer\PHPMailer\PHPMailer;
+                    use PHPMailer\PHPMailer\Exception;
+                    use PHPMailer\PHPMailer\SMTP;
 
-                        require "./PHPMailer/src/PHPMailer.php";
-                        require "./PHPMailer/src/Exception.php";
-                        require "./PHPMailer/src/SMTP.php";
 
-                        if ( isset( $_POST['submit'] ) ) {
-                            $user_name        = htmlentities( $_POST['user_name'] );
-                            $user_phone       = htmlentities( $_POST['user_phone'] );
-                            $user_email       = htmlentities( $_POST['user_email'] );
-                            $shop_name        = htmlentities( $_POST['user_bus_name'] );
-                            $user_address     = htmlentities( $_POST['user_bus_add'] );
-                            $business_details = htmlentities( $_POST['user_bus_desc'] );
-                            $sector_id        = htmlentities( $_POST['sector_id'] );
+                    require "./PHPMailer/src/PHPMailer.php";
+                    require "./PHPMailer/src/Exception.php";
+                    require "./PHPMailer/src/SMTP.php";
 
-                            $mail = new PHPMailer( true );
-                            $mail->isSMTP();
-                            $mail->Host       = 'mail.barkingportal.uk';
-                            $mail->SMTPAuth   = true;
-                            $mail->Username   = 'admin@barkingportal.uk';
-                            $mail->Password   = 'Nq.M2(y)S$;j';
-                            $mail->Port       = 465;
-                            $mail->SMTPSecure = 'ssl';
-                            $mail->isHTML( true );
-                            $mail->setFrom( 'admin@barkingportal.uk' );
-                            $mail->addAddress( $user_email );
-                            $mail->Subject = 'Thank You For Register.';
-                            $mail->Body    = "Hi " . $user_name . ",<br> Thank you for register in Barking Portal. Please click the Link <a href='https://barkingportal.uk/userPortal.php?name=" . $shop_name . "'>" . $shop_name . "</a> to view your page in Barking Portal site.<br> Please reply if you need anything to modify.<br><br><strong>Barking Portal</strong>";
-                            $mail->send();
+                    if(isset($_POST['submit'])){
+                        $user_name        = htmlentities( $_POST['user_name'] );
+                        $user_phone       = htmlentities( $_POST['user_phone'] );
+                        $user_email       = htmlentities( $_POST['user_email'] );
+                        $shop_name        = htmlentities( $_POST['user_bus_name'] );
+                        $user_address     = htmlentities( $_POST['user_bus_add'] );
+                        $business_details = htmlentities( $_POST['user_bus_desc'] );
+                        $sector_id        = htmlentities( $_POST['sector_id'] );
 
-                        }
+                        $mail = new PHPMailer( true );
+                        $mail->isSMTP();
+                        $mail->Host       = 'mail.barkingportal.uk';
+                        $mail->SMTPAuth   = true;
+                        $mail->Username   = 'admin@barkingportal.uk';
+                        $mail->Password   = 'Nq.M2(y)S$;j';
+                        $mail->Port       = 465;
+                        $mail->SMTPSecure = 'ssl';
+                        $mail->isHTML( true );
+                        $mail->setFrom( 'admin@barkingportal.uk' );
+                        $mail->addAddress( $user_email );
+                        $mail->Subject = 'Thank You For Register.';
+                        $mail->Body    = "Hi ".$user_name.",<br> Thank you for register in Barking Portal. Please click the Link <a href='https://barkingportal.uk/userPortal.php?name=".$shop_name."'>".$shop_name."</a> to view your page in Barking Portal site.<br> Please reply if you need anything to modify.<br><br><strong>Barking Portal</strong>";
+                        $mail->send();
+
+                    }
                     ?>
                 </div>
             </div>
